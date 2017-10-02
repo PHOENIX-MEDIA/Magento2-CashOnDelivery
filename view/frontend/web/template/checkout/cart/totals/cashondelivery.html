@@ -1,0 +1,20 @@
+<!-- ko -->
+<!-- ko if: isSelected() -->
+    <!-- ko if: displayIncluding() -->
+        <tr class="totals cashondelivery excl">
+            <th class="mark" scope="row" data-bind="text: title + ' ' + excludingTaxMessage"></th>
+            <td class="amount">
+                <span class="price" data-bind="text: getValue()"></span>
+            </td>
+        </tr>
+    <!-- /ko -->
+    <!-- ko if: displayExcluding() -->
+        <tr class="totals cashondelivery incl">
+            <th class="mark" scope="row" data-bind="text: title + ' ' + includingTaxMessage"></th>
+            <td class="amount">
+                <span class="price" data-bind="text: getValueInclTax()"></span>
+            </td>
+        </tr>
+    <!-- /ko -->
+<!-- /ko -->
+<!-- /ko -->

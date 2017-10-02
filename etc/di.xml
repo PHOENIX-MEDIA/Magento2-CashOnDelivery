@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Phoenix\CashOnDelivery\Api\OrderDataProviderInterface" type="Phoenix\CashOnDelivery\Model\OrderData\Provider"/>
+    <preference for="Phoenix\CashOnDelivery\Api\FeeProviderInterface" type="Phoenix\CashOnDelivery\Model\Fee\Provider"/>
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="codOrderRepositoryPlugin" type="Phoenix\CashOnDelivery\Plugin\Sales\OrderRepositoryPlugin"/>
+    </type>
+    <type name="Magento\Sales\Api\InvoiceRepositoryInterface">
+        <plugin name="codInvoiceRepositoryPlugin" type="Phoenix\CashOnDelivery\Plugin\Sales\InvoiceRepositoryPlugin"/>
+    </type>
+    <type name="Magento\Sales\Api\CreditmemoRepositoryInterface">
+        <plugin name="codCreditmemoRepositoryPlugin" type="Phoenix\CashOnDelivery\Plugin\Sales\CreditmemoRepositoryPlugin"/>
+    </type>
+    <type name="Magento\Sales\Model\Order\Invoice">
+        <plugin name="codInvoicePlugin" type="Phoenix\CashOnDelivery\Plugin\Sales\InvoicePlugin"/>
+    </type>
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="codOrderPlugin" type="Phoenix\CashOnDelivery\Plugin\Sales\OrderPlugin"/>
+    </type>
+</config>
