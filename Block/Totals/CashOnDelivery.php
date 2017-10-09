@@ -19,6 +19,7 @@ namespace Phoenix\CashOnDelivery\Block\Totals;
 use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\Template;
 use Magento\Tax\Model\Config as TaxConfig;
+use Phoenix\CashOnDelivery\Helper\Data;
 use Phoenix\CashOnDelivery\Model\Config;
 
 class CashOnDelivery extends Template
@@ -29,14 +30,24 @@ class CashOnDelivery extends Template
     protected $config;
 
     /**
+     * @var Data $helper
+     */
+    protected $helper;
+
+    /**
      * @var \Magento\Sales\Model\Order
      */
     protected $source;
 
-    public function __construct(Template\Context $context, Config $config, array $data = [])
-    {
-        $this->config = $config;
+    public function __construct(
+        Template\Context $context,
+        Config $config,
+        Data $helper,
+        array $data = []
+    ) {
         parent::__construct($context, $data);
+        $this->config = $config;
+        $this->helper = $helper;
     }
 
     public function displayFullSummary()
@@ -64,6 +75,10 @@ class CashOnDelivery extends Template
         /** @var \Magento\Sales\Block\Order\Totals $parent */
         $parent = $this->getParentBlock();
         $this->source = $parent->getSource();
+
+        if (!$this->helper->isActiveMethod($this->source)) {
+            return $this;
+        }
 
         $displayType = $this->config->getDisplayType();
 

@@ -171,8 +171,7 @@ class Fee implements FeeInterface
      */
     public function setExtensionAttributes(
         \Phoenix\CashOnDelivery\Api\Data\FeeExtensionInterface $extensionAttributes
-    )
-    {
+    ) {
         $this->_extensionAttributes = $extensionAttributes;
         return $this;
     }

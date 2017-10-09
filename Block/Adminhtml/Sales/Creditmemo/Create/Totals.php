@@ -20,6 +20,7 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\DataObject;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Phoenix\CashOnDelivery\Model\Config;
+use Phoenix\CashOnDelivery\Helper\Data;
 
 /**
  * Gets totals form for to-be-created credit memos
@@ -52,6 +53,10 @@ class Totals extends Template
     private $priceCurrency;
 
     /**
+     * @var Data $helper
+     */
+    private $helper;
+    /**
      * Totals constructor
      *
      * @param Template\Context $context
@@ -63,12 +68,14 @@ class Totals extends Template
         Template\Context $context,
         Config $config,
         PriceCurrencyInterface $priceCurrency,
+        Data $helper,
         array $data = []
     ) {
         parent::__construct($context, $data);
 
         $this->config = $config;
         $this->priceCurrency = $priceCurrency;
+        $this->helper = $helper;
     }
 
     /**
@@ -81,6 +88,11 @@ class Totals extends Template
         /** @var \Magento\Sales\Block\Order\Creditmemo\Totals $parent */
         $parent = $this->getParentBlock();
         $this->source = $parent->getSource();
+
+        if (!$this->helper->isActiveMethod($this->source->getOrder())) {
+            return $this;
+        }
+
         $total = new DataObject([
             'code' => 'phoenix_cashondelivery_fee',
             'block_name' => $this->getNameInLayout(),

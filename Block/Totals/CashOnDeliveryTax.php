@@ -18,24 +18,40 @@ namespace Phoenix\CashOnDelivery\Block\Totals;
 
 use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\Template;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Model\Order\Invoice;
+use Magento\Sales\Model\Order\Creditmemo;
+use Phoenix\CashOnDelivery\Helper\Data;
 
 class CashOnDeliveryTax extends Template
 {
     /**
-     * @var \Magento\Sales\Model\Order\Invoice
+     * @var Order|Invoice|Creditmemo\
      */
     protected $source;
 
-    public function __construct(Template\Context $context, array $data = [])
-    {
+    /**
+     * @var Data $helper
+     */
+    protected $helper;
+
+    public function __construct(
+        Template\Context $context,
+        Data $helper,
+        array $data = []
+    ) {
         parent::__construct($context, $data);
+        $this->helper = $helper;
     }
 
     public function initTotals()
     {
-        /** @var \Magento\Sales\Block\Order\Invoice\Totals $parent */
         $parent = $this->getParentBlock();
         $this->source = $parent->getSource();
+
+        if (!$this->helper->isActiveMethod($this->source)) {
+            return $this;
+        }
 
         $cod_tax = new DataObject(
             [
@@ -46,5 +62,7 @@ class CashOnDeliveryTax extends Template
             ]
         );
         $parent->addTotalBefore($cod_tax, 'tax');
+
+        return $this;
     }
 }

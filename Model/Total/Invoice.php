@@ -17,15 +17,33 @@
 namespace Phoenix\CashOnDelivery\Model\Total;
 
 use Magento\Sales\Model\Order\Invoice\Total\AbstractTotal;
+use Phoenix\CashOnDelivery\Helper\Data;
 
 class Invoice extends AbstractTotal
 {
+    /**
+     * @var Data $helper
+     */
+    protected $helper;
+
+    public function __construct(
+        Data $helper,
+        array $data = []
+    ) {
+        parent::__construct($data);
+        $this->helper = $helper;
+    }
+
     /**
      * @param \Magento\Sales\Model\Order\Invoice $invoice
      * @return self
      */
     public function collect(\Magento\Sales\Model\Order\Invoice $invoice)
     {
+        if (!$this->helper->isActiveMethod($invoice->getOrder())) {
+            return $this;
+        }
+
         $baseCodFee = $invoice->getBaseCodFee();
         $codFee = $invoice->getCodFee();
 

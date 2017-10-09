@@ -18,6 +18,9 @@ namespace Phoenix\CashOnDelivery\Helper;
 
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Quote\Model\Quote;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Model\Order\Invoice;
+use Magento\Sales\Model\Order\Creditmemo;
 use Magento\Store\Model\Store;
 use Phoenix\CashOnDelivery\Model\Config;
 use Phoenix\CashOnDelivery\Model\Ui\ConfigProvider;
@@ -120,12 +123,13 @@ class Data
     /**
      * Checks if quote has set Phoenix Cash on Delivery as its payment method
      *
-     * @param Quote $quote
+     * @param Quote|Order|Invoice|Creditmemo $quote
      * @return bool
      */
-    public function isActiveMethod(Quote $quote)
+    public function isActiveMethod($entity)
     {
-        $paymentMethod = $quote->getPayment();
+        $order = $this->getPaymentEntity($entity);
+        $paymentMethod = $order->getPayment();
         $method = $paymentMethod->getMethod();
 
         return $method === ConfigProvider::CODE;
@@ -173,5 +177,16 @@ class Data
         }
 
         return $minCost;
+    }
+
+    /**
+     * @param Quote|Order|Invoice|Creditmemo $entity
+     * @return Order
+     */
+    private function getPaymentEntity($entity)
+    {
+        $returnDirectly = $entity instanceof Order || $entity instanceof Quote;
+
+        return $returnDirectly ? $entity : $entity->getOrder();
     }
 }

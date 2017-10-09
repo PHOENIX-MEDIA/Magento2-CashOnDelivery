@@ -59,6 +59,10 @@ class Creditmemo extends AbstractTotal
      */
     public function collect(MagentoCreditmemo $creditmemo)
     {
+        if (!$this->helper->isActiveMethod($creditmemo->getOrder())) {
+            return $this;
+        }
+
         $this->setCustomRefund($creditmemo);
 
         $isPartialShippingRefunded = $this->isPartialShippingRefunded($creditmemo);
@@ -69,6 +73,7 @@ class Creditmemo extends AbstractTotal
             $totalBaseCodFee = $creditmemo->getBaseCodFee();
             $totalCodFee = $creditmemo->getCodFee();
         }
+
         $creditmemo->setBaseGrandTotal($creditmemo->getBaseGrandTotal() + $totalBaseCodFee);
         $creditmemo->setGrandTotal($creditmemo->getGrandTotal() + $totalCodFee);
 
