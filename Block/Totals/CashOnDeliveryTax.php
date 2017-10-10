@@ -49,7 +49,10 @@ class CashOnDeliveryTax extends Template
         $parent = $this->getParentBlock();
         $this->source = $parent->getSource();
 
-        if (!$this->helper->isActiveMethod($this->source)) {
+        if (
+            !$this->helper->isActiveMethod($this->source) ||
+            $this->source instanceof Order
+        ) {
             return $this;
         }
 
