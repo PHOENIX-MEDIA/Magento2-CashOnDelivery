@@ -54,14 +54,17 @@ class CashOnDelivery extends \Magento\Payment\Model\Method\AbstractMethod
             return $available;
         }
 
-        $shippingMethods = $quote->getExtensionAttributes()->getShippingAssignments();
+        $extensionAttributes = $quote->getExtensionAttributes();
+        if ($extensionAttributes !== null) {
+            $shippingMethods = $extensionAttributes->getShippingAssignments();
 
-        $disallowedShippingMethods = $this->getDisallowedShippingMethods();
-        foreach ($shippingMethods as $shippingMethod) {
-            if (in_array($shippingMethod->getShipping()->getMethod(), $disallowedShippingMethods)) {
-                $available = false;
+            $disallowedShippingMethods = $this->getDisallowedShippingMethods();
+            foreach ($shippingMethods as $shippingMethod) {
+                if (in_array($shippingMethod->getShipping()->getMethod(), $disallowedShippingMethods)) {
+                    $available = false;
+                }
+                $shippingMethod->getShipping()->getMethod();
             }
-            $shippingMethod->getShipping()->getMethod();
         }
 
         return $available;
