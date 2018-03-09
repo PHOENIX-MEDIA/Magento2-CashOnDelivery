@@ -84,7 +84,7 @@
         <section id="tax">
             <group id="classes" translate="label">
                 <field id="phoenix_cashondelivery_tax_class" type="select" translate="label" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Tax Class for Cash on Delivery Fee</label>
+                    <label>Tax Class for Cash on Delivery fee</label>
                     <source_model>Magento\Tax\Model\TaxClass\Source\Product</source_model>
                     <backend_model>Magento\Tax\Model\Config\TaxClass</backend_model>
                 </field>
@@ -98,7 +98,7 @@
             </group>
             <group id="display">
                 <field id="phoenix_cashondelivery_fee" type="select" translate="label" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Display Cash on Delivery Fee</label>
+                    <label>Display Cash on Delivery fee</label>
                     <source_model>Magento\Tax\Model\System\Config\Source\Tax\Display\Type</source_model>
                     <backend_model>Magento\Tax\Model\Config\Notification</backend_model>
                 </field>
