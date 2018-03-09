@@ -120,16 +120,18 @@ class Quote extends CommonTaxCollector
     {
         $this->_unsetTaxableInfo($quote);
 
-        /** @var TaxDetailsItemInterface $baseCodTaxDetails */
-        $baseCodTaxDetails = $taxDetails['baseCodTaxDetails']->getItems()[self::ITEM_TYPE_COD_FEE];
-        /** @var TaxDetailsItemInterface $codTaxDetails */
-        $codTaxDetails = $taxDetails['codTaxDetails']->getItems()[self::ITEM_TYPE_COD_FEE];
-
         $total->setBaseTotalAmount('cashondelivery', 0);
         $total->setTotalAmount('cashondelivery', 0);
 
-        $total->addBaseTotalAmount('tax', $baseCodTaxDetails->getRowTax() * -1);
-        $total->addTotalAmount('tax', $codTaxDetails->getRowTax() * -1);
+        if (!empty($taxDetails)) {
+            /** @var TaxDetailsItemInterface $baseCodTaxDetails */
+            $baseCodTaxDetails = $taxDetails['baseCodTaxDetails']->getItems()[self::ITEM_TYPE_COD_FEE];
+            /** @var TaxDetailsItemInterface $codTaxDetails */
+            $codTaxDetails = $taxDetails['codTaxDetails']->getItems()[self::ITEM_TYPE_COD_FEE];
+
+            $total->addBaseTotalAmount('tax', $baseCodTaxDetails->getRowTax() * -1);
+            $total->addTotalAmount('tax', $codTaxDetails->getRowTax() * -1);
+        }
 
         $total->setBaseCodFee(0);
         $total->setCodFee(0);
@@ -156,7 +158,7 @@ class Quote extends CommonTaxCollector
         $codFeeDataObject = $this->_getCashOnDeliveryDataObject($shippingAssignment, $total, false);
 
         if ($baseCodFeeDataObject == null || $codFeeDataObject == null) {
-            return $this;
+            return [];
         }
 
         $storeId = $quote->getStoreId();
