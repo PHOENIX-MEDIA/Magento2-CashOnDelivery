@@ -37,12 +37,6 @@
                         <field id="allowspecific">1</field>
                     </depends>
                 </field>
-                <field id="min_order_total" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Minimum Order Total</label>
-                </field>
-                <field id="max_order_total" translate="label" sortOrder="51" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Maximum Order Total</label>
-                </field>
                 <field id="cost_type" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Cost calculation</label>
                     <source_model>Phoenix\CashOnDelivery\Model\Config\Source\CalculationType</source_model>
@@ -78,6 +72,15 @@
                     <depends>
                         <field id="disallowspecificshippingmethods">1</field>
                     </depends>
+                </field>
+                <field id="min_order_total" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Minimum Order Total</label>
+                </field>
+                <field id="max_order_total" translate="label" sortOrder="101" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Maximum Order Total</label>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
                 </field>
             </group>
         </section>
