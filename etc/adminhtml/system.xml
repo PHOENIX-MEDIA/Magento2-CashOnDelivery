@@ -22,10 +22,6 @@
                 <field id="title" translate="label" sortOrder="1" showInDefault="20" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Title</label>
                 </field>
-                <field id="order_status" type="select" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>New order status</label>
-                    <source_model>Phoenix\CashOnDelivery\Model\Config\Source\Order\Status</source_model>
-                </field>
                 <field id="allowspecific" type="allowspecific" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Payment from Applicable Countries</label>
                     <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
