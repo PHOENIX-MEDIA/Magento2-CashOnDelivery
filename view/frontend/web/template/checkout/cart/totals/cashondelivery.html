@@ -1,6 +1,6 @@
 <!-- ko -->
 <!-- ko if: isSelected() -->
-    <!-- ko if: displayIncluding() -->
+    <!-- ko if: displayExcluding() -->
         <tr class="totals cashondelivery excl">
             <th class="mark" scope="row" data-bind="text: title + ' ' + excludingTaxMessage"></th>
             <td class="amount">
@@ -8,7 +8,7 @@
             </td>
         </tr>
     <!-- /ko -->
-    <!-- ko if: displayExcluding() -->
+    <!-- ko if: displayIncluding() -->
         <tr class="totals cashondelivery incl">
             <th class="mark" scope="row" data-bind="text: title + ' ' + includingTaxMessage"></th>
             <td class="amount">
