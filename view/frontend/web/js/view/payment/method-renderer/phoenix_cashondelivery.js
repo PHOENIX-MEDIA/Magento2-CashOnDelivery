@@ -48,6 +48,9 @@ define(
             },
             getCustomText: function () {
                 return window.checkoutConfig.payment.phoenix_cashondelivery.customText;
+            },
+			getPaymentAcceptanceMarkSrc: function () {
+                return window.checkoutConfig.payment.phoenix_cashondelivery.paymentAcceptanceMarkSrc;
             }
         });
     }
