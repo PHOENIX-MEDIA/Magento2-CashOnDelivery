@@ -77,15 +77,24 @@ class Config
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     protected $_scopeConfig;
-
+     /**
+     *
+     * @var \\Magento\Framework\View\Asset\Repository
+     */
+    protected $_assetRepo;
+    
     /**
      * Config constructor
      *
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
-    public function __construct(\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig)
+    public function __construct(
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Framework\View\Asset\Repository $assetRepo
+    )
     {
         $this->_scopeConfig = $scopeConfig;
+        $this->_assetRepo = $assetRepo;
     }
 
     /**
@@ -348,5 +357,15 @@ class Config
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $store
         );
+    }
+    
+    /**
+     * @return ImageUrl
+     */
+	public function getPaymentMarkImageUrl()
+    {
+		$paymentImage = $this->_assetRepo->getUrl("Phoenix_CashOnDelivery::images/cod.png");
+
+        return $paymentImage;
     }
 }
