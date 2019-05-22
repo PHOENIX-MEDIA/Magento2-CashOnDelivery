@@ -53,6 +53,7 @@ class ConfigProvider implements ConfigProviderInterface
                     'displayZeroFee' => $this->config->displayZeroFee(),
                     'disallowificShippingMethod' => $this->config->disallowSpecificShippingMethods(),
                     'disallowedShippingMethods' => $this->config->getDisallowedShippingMethods(),
+                    'paymentAcceptanceMarkSrc' => $this->config->getPaymentMarkImageUrl(),
                 ]
             ]
         ];
