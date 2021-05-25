@@ -90,9 +90,9 @@ class Creditmemo extends AbstractTotal
         $rate = $creditmemo->getBaseToOrderRate();
         $customFee = $this->helper->roundPrice($baseCustomFee * $rate);
 
-        $taxRate = $creditmemo->getBaseCodFeeInclTax() / $creditmemo->getBaseCodFee();
+        $taxRate = $creditmemo->getBaseCodFee() != 0 ? $creditmemo->getBaseCodFeeInclTax() / $creditmemo->getBaseCodFee() : 0;
 
-        if ($this->config->codFeeIncludesTax()) {
+        if ($taxRate > 0 && $this->config->codFeeIncludesTax()) {
             $baseCodFeeInclTax = $baseCustomFee;
             $codFeeInclTax = $customFee;
 
@@ -124,6 +124,11 @@ class Creditmemo extends AbstractTotal
 
     private function isPartialShippingRefunded(MagentoCreditmemo $creditmemo)
     {
+        if($creditmemo->getOrder()->getShippingAmount()<=0)
+        {
+            return false;
+        }
+
         $part = $creditmemo->getShippingAmount() / $creditmemo->getOrder()->getShippingAmount();
 
         return $part < 1 && $creditmemo->getOrder()->getShippingTaxAmount() > 0;
